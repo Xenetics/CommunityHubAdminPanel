@@ -3,7 +3,7 @@ Administration panel for a Library focused digital community hub
 
 The App repo is located at https://github.com/Xenetics/CommunityHub
 
-##Required fields to modify for your
+## Required fields to modify for your
 
 AdminPanel.cs
 azureHelper param : Azure storage key can be found in the azure portal after you create storage account	AdminPanel
