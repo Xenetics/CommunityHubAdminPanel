@@ -549,7 +549,7 @@ namespace AdminPanel
         {
             if (AdminUtilities.ModificationClearenceCheck(PinTypes[TypesDropdown.SelectedIndex]))
             {
-                if (dateRegex.IsMatch(StartDateInputBox.Text) && dateRegex.IsMatch(EndDateInputBox.Text))
+                if (ValidPinCheck())
                 {
                     string tempPOI = "";
                     tempPOI += "<TYPE>" + PinTypes[TypesDropdown.SelectedIndex];
@@ -574,15 +574,33 @@ namespace AdminPanel
                     TypesDropdown.SelectedIndex = -1;
                     ClearPinPanelValue();
                 }
-                else
-                {
-                    MessageBox.Show("Start Date or End Date is formatted wrong", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
             else
             {
                 MessageBox.Show("You do not have proper clearance for this feature.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
+        }
+
+        // Checks the pin input to make sure its valid
+        private bool ValidPinCheck()
+        {
+            if (LatitudeInputBox.Text.Length == 0 || LongitudeInputBox.Text.Length == 0)
+            {
+                MessageBox.Show("Must have coordinates", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            else if (!dateRegex.IsMatch(StartDateInputBox.Text) || !dateRegex.IsMatch(EndDateInputBox.Text))
+            {
+                MessageBox.Show("Start Date or End Date is formatted wrong", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (MessageInputBox.Text.Length == 0 && PinTypes[TypesDropdown.SelectedIndex] == "Tokens")
+            {
+                MessageBox.Show("Must have message", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
         }
 
         // Downloads all the points of interes data(pins)
