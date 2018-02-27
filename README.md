@@ -16,7 +16,7 @@ The App repo is located at https://github.com/Xenetics/CommunityHub
 <b>triviaPartition</b> : General partition for the trivia table	AdminPanel  
   
 ### AdminUtilities.cs  
-<b>containerName</b> : Container for the Administration accounts can be created in azure portal or microsoft azure storage explorer	AdminPanel  	
+<b>containerName</b> : Container for the Administration accounts can be created in azure portal or microsoft azure storage explorer	AdminPanel  
 <b>Organization</b> : Organisations that have admin privilages	AdminPanel  
   
 ### Product.cs  
