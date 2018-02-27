@@ -125,6 +125,7 @@
     <Compile Include="AdminUtilities.cs" />
     <Compile Include="AzureHelper.cs" />
     <Compile Include="CalendarEvent.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Program.cs" />

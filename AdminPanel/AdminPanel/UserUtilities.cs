@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 public static class UserUtilities
 {
     /// <summary> Blobstore container where users are stored </summary>
-    public static string containerName = "users"; // REQUIRED-FIELD : Container for the Users of the app can be created in azure portal or microsoft azure storage explorer
+    public static string containerName = "users";
     /// <summary> Minimum length of a password </summary>
     public static int minPassLength = 6;
     /// <summary> Minimum length of a username </summary>

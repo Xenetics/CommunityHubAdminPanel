@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 public static class AdminUtilities
 {
     /// <summary> blobstore Container for admin data </summary>
-    public static string containerName = "admin"; // REQUIRED-FIELD : Container for the Administration accounts can be created in azure portal or microsoft azure storage explorer
+    public static string containerName = "admin";
     /// <summary> Enum for organitations that an admin can be a part of </summary>
     public enum Organization { MPL, TOM, Heritage, Conservation, Admin } // REQUIRED-FIELD : Organisations that have admin privilages
     /// <summary> Enum for the clearence levels an admin can have </summary>

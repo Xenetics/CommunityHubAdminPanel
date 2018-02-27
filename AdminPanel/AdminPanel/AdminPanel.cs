@@ -20,7 +20,7 @@ namespace AdminPanel
     {
         // A object which allows interaction with the azure databases
         public AzureHelper azureHelper;
-
+        private string storageKey;
         // States
         public enum MainState { Login, PointsRedeem, UserDB, ProductCatalog, Events, Pins, QRCodes, AdminDB, Trivia }
         // Current state of the panel
@@ -37,9 +37,30 @@ namespace AdminPanel
         private void AdminPanel_Load(object sender, EventArgs e)
         {
             // Init anything
+            if (!Config.CreateConfigFile())
+            {
+                if (Config.LoadConfigFile())
+                {
+                    storageKey = Config.settings["StorageKey"];
+                    POIContainer = Config.settings["POIContainer"];
+                    QRCodeContainer = Config.settings["QRContainer"];
+                    EventsContainer = Config.settings["EventsContainer"];
+                    ProductsContainer = Config.settings["ProductsContainer"];
+                    UserUtilities.containerName = Config.settings["UserContainer"];
+                    AdminUtilities.containerName = Config.settings["AdminContainer"];
+                    RestHelper.URL = Config.settings["SierraURL"];
+                    RestHelper.authSecret = Config.settings["SierraSecret"];
+                }
+            }
+            else
+            {
+                this.Close();
+                return;
+            }
 
             // Create Azure helper and pass in storage key string
-            azureHelper = new AzureHelper("AZURE BLOBSTORE STORAGE KEY STRING"); // REQUIRED-FIELD : Azure storage key can be found in the azure portal after you create storage account
+            azureHelper = new AzureHelper(storageKey);
+            Config.CreateInitialAdmin(azureHelper.BlobClient);
 
             // Create various lists for dropdowns on the panel pages
             TypesDropdown.Items.AddRange(PinTypes.ToArray());
@@ -488,7 +509,7 @@ namespace AdminPanel
 
         #region Pins Page
         /// <summary> Azure container name for the Locations/pins/POIS for rewards </summary>
-        public string POIContainer = "pois"; // REQUIRED-FIELD : Container for the points of interest can be created in azure portal or microsoft azure storage explorer
+        public string POIContainer = "pois";
         /// <summary> Array of strings representing the pin types </summary>
         public List<string> PinTypes = new List<string> { "Generic", "Game", "Heritage", "Conservation", "MPL", "TOM", "Tokens" }; // REQUIRED-FIELD Names of the pintypes that you want in the app
         /// <summary> List of points downloaded from blobstore </summary>
@@ -677,7 +698,7 @@ namespace AdminPanel
 
         #region QR Codes
         /// <summary> Azure container name for the QRCodes for rewards </summary>
-        public string QRCodeContainer = "qrcodes"; // REQUIRED-FIELD : Container for the QR Codes can be created in azure portal or microsoft azure storage explorer
+        public string QRCodeContainer = "qrcodes";
         /// <summary> List of Downloaded QR codes for point distrobution </summary>
         private List<QRCode> QRCodes;
         /// <summary> List of string values that represent the enums for qr types </summary>
@@ -915,7 +936,7 @@ namespace AdminPanel
 
         #region Events
         /// <summary> Azure container name for the Events </summary>
-        public string EventsContainer = "events"; // REQUIRED-FIELD : Container for the Calander Events can be created in azure portal or microsoft azure storage explorer
+        public string EventsContainer = "events";
         /// <summary> States for the event panel </summary>
         public enum EventState { Idle, Adding, Updating }
         /// <summary> Current state of the event panel </summary>
@@ -1159,7 +1180,7 @@ namespace AdminPanel
 
         #region Products
         /// <summary> Azure container name for the products </summary>
-        public string ProductsContainer = "products"; // REQUIRED-FIELD : Container for the Products can be created in azure portal or microsoft azure storage explorer
+        public string ProductsContainer = "products";
         private List<Product> Products;
         /// <summary> States for the Product panel </summary>
         private enum ProductPanelStates { GENERATE, UPDATE }
@@ -1517,8 +1538,8 @@ namespace AdminPanel
 
         #region Trivia
         /// <summary> Azure container name for the Locations/pins/POIS for rewards </summary>
-        public string triviaContainer = "trivia"; // REQUIRED-FIELD : Container for the trivia can be created in azure portal or microsoft azure storage explorer
-        public string triviaPartition = "trivia"; // REQUIRED-FIELD : General partition for the trivia table
+        public string triviaContainer = "trivia";
+        public string triviaPartition = "trivia";
         /// <summary> List of questions downloaded from blobstore </summary>
         private List<TriviaQuestion> Questions;
         /// <summary> Trivia question currently selected </summary>
