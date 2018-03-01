@@ -42,3 +42,6 @@ The following are fields that you will want to modify to customize your admin pa
 <b>ProductOrg</b> : Organizations that have products in the hub	AdminPanel  
 ### QRCode.cs  
 <b>QRTypes</b> : Organizations that can be connected to a QR Code	AdminPanel   
+
+
+All contents of repository are considered fair use under MIT licensing.
